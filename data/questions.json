@@ -1,0 +1,246 @@
+{
+  "assessment_name": "AI Talent Mapper — Natural Intelligence Assessment",
+  "version": "1.0",
+  "language": ["hi", "en"],
+  "scale": {
+    "min": 1,
+    "max": 5,
+    "labels_hi": {
+      "1": "बिल्कुल नहीं",
+      "2": "कम",
+      "3": "कुछ हद तक",
+      "4": "अधिक",
+      "5": "बहुत अधिक"
+    },
+    "labels_en": {
+      "1": "Not at all",
+      "2": "Low",
+      "3": "Moderate",
+      "4": "High",
+      "5": "Very High"
+    }
+  },
+  "codes": {
+    "E12": {
+      "name_hi": "खोजकर्ता बुद्धिमत्ता",
+      "name_en": "Explorer Intelligence",
+      "description_hi": "नई चीजों को खोजने, प्रयोग करने और स्वयं सीखने की प्रवृत्ति।",
+      "careers": [
+        "Scientist",
+        "Researcher",
+        "Engineer",
+        "Data Analyst"
+      ]
+    },
+    "9HY": {
+      "name_hi": "गतिशील-क्रियात्मक बुद्धिमत्ता",
+      "name_en": "Agile Dynamo",
+      "description_hi": "करके सीखने, गति, अनुकूलन और hands-on problem solving की प्रवृत्ति।",
+      "careers": [
+        "Sports",
+        "Operations",
+        "Field Engineering",
+        "Entrepreneurship"
+      ]
+    },
+    "80L": {
+      "name_hi": "दृश्य-स्थानिक बुद्धिमत्ता",
+      "name_en": "Visual Architect",
+      "description_hi": "चित्रों, डिजाइन, स्थान और visual patterns के माध्यम से सोचने की प्रवृत्ति।",
+      "careers": [
+        "Designer",
+        "Architect",
+        "Animator",
+        "UX/UI Designer"
+      ]
+    },
+    "021": {
+      "name_hi": "सामाजिक-भाषाई बुद्धिमत्ता",
+      "name_en": "Articulate Orator",
+      "description_hi": "संचार, लोगों को समझने, नेतृत्व और विचारों को प्रभावी ढंग से व्यक्त करने की प्रवृत्ति।",
+      "careers": [
+        "Teacher",
+        "Leader",
+        "Consultant",
+        "Communication"
+      ]
+    },
+    "23BR": {
+      "name_hi": "तार्किक-विश्लेषणात्मक बुद्धिमत्ता",
+      "name_en": "Efficiency Expert",
+      "description_hi": "तर्क, डेटा, संरचना, गणना और समस्या को व्यवस्थित ढंग से हल करने की प्रवृत्ति।",
+      "careers": [
+        "Data Analyst",
+        "AI/ML",
+        "Finance",
+        "Business Analyst"
+      ]
+    },
+    "D1": {
+      "name_hi": "स्व-निर्भर बुद्धिमत्ता",
+      "name_en": "Self-Reliant Maverick",
+      "description_hi": "स्वतंत्र निर्णय लेने, पहल करने और बिना निरंतर निर्देशन के काम करने की प्रवृत्ति।",
+      "careers": [
+        "Founder",
+        "Entrepreneur",
+        "Independent Consultant",
+        "Project Lead"
+      ]
+    }
+  },
+  "questions": [
+    {
+      "id": 1,
+      "code": "E12",
+      "text_hi": "जब आपको कोई नई समस्या मिलती है, तो क्या आप स्वयं उसका कारण खोजने की कोशिश करते हैं?",
+      "text_en": "When you face a new problem, do you try to discover the cause yourself?",
+      "reverse": false
+    },
+    {
+      "id": 2,
+      "code": "E12",
+      "text_hi": "क्या आपको नई चीजों के बारे में प्रयोग करके सीखना पसंद है?",
+      "text_en": "Do you enjoy learning new things through experimentation?",
+      "reverse": false
+    },
+    {
+      "id": 3,
+      "code": "E12",
+      "text_hi": "क्या किसी विषय में आपकी जिज्ञासा आपको स्वयं research करने के लिए प्रेरित करती है?",
+      "text_en": "Does curiosity about a subject motivate you to research it on your own?",
+      "reverse": false
+    },
+
+    {
+      "id": 4,
+      "code": "9HY",
+      "text_hi": "क्या आप किसी काम को केवल पढ़ने के बजाय करके सीखना अधिक पसंद करते हैं?",
+      "text_en": "Do you prefer learning by doing rather than only reading?",
+      "reverse": false
+    },
+    {
+      "id": 5,
+      "code": "9HY",
+      "text_hi": "क्या बदलती परिस्थितियों में आप जल्दी अपने तरीके को बदल लेते हैं?",
+      "text_en": "Can you quickly adapt your approach when circumstances change?",
+      "reverse": false
+    },
+    {
+      "id": 6,
+      "code": "9HY",
+      "text_hi": "क्या practical activities और hands-on projects आपको उत्साहित करते हैं?",
+      "text_en": "Do practical activities and hands-on projects excite you?",
+      "reverse": false
+    },
+
+    {
+      "id": 7,
+      "code": "80L",
+      "text_hi": "क्या आपको चीजों को चित्र, diagram या visual form में समझना आसान लगता है?",
+      "text_en": "Do you understand things more easily through pictures, diagrams or visuals?",
+      "reverse": false
+    },
+    {
+      "id": 8,
+      "code": "80L",
+      "text_hi": "क्या आपको drawing, design या किसी चीज की visual structure बनाने में रुचि है?",
+      "text_en": "Are you interested in drawing, design or creating visual structures?",
+      "reverse": false
+    },
+    {
+      "id": 9,
+      "code": "80L",
+      "text_hi": "क्या आप किसी समस्या का समाधान उसके आकार, स्थान या visual pattern को देखकर खोज लेते हैं?",
+      "text_en": "Can you solve problems by noticing spatial relationships or visual patterns?",
+      "reverse": false
+    },
+
+    {
+      "id": 10,
+      "code": "021",
+      "text_hi": "क्या आप अपने विचारों को दूसरों के सामने आसानी से समझा सकते हैं?",
+      "text_en": "Can you explain your ideas clearly to other people?",
+      "reverse": false
+    },
+    {
+      "id": 11,
+      "code": "021",
+      "text_hi": "क्या लोगों के साथ बातचीत करना और उनकी बात समझना आपको स्वाभाविक लगता है?",
+      "text_en": "Does communicating with people and understanding them come naturally to you?",
+      "reverse": false
+    },
+    {
+      "id": 12,
+      "code": "021",
+      "text_hi": "क्या आप किसी group में लोगों को प्रेरित या organize करने की पहल करते हैं?",
+      "text_en": "Do you take initiative to motivate or organize people in a group?",
+      "reverse": false
+    },
+
+    {
+      "id": 13,
+      "code": "23BR",
+      "text_hi": "क्या आपको numbers, data और logical patterns को समझना पसंद है?",
+      "text_en": "Do you enjoy understanding numbers, data and logical patterns?",
+      "reverse": false
+    },
+    {
+      "id": 14,
+      "code": "23BR",
+      "text_hi": "क्या आप किसी बड़े problem को छोटे logical steps में बाँटकर हल करना पसंद करते हैं?",
+      "text_en": "Do you like breaking a complex problem into smaller logical steps?",
+      "reverse": false
+    },
+    {
+      "id": 15,
+      "code": "23BR",
+      "text_hi": "क्या किसी निर्णय से पहले आप facts और evidence को देखना पसंद करते हैं?",
+      "text_en": "Do you prefer looking at facts and evidence before making a decision?",
+      "reverse": false
+    },
+
+    {
+      "id": 16,
+      "code": "D1",
+      "text_hi": "क्या आप बिना किसी के बार-बार निर्देश दिए अपना काम स्वयं शुरू कर देते हैं?",
+      "text_en": "Can you start and manage your work without repeated instructions?",
+      "reverse": false
+    },
+    {
+      "id": 17,
+      "code": "D1",
+      "text_hi": "क्या आप अपने निर्णय स्वयं लेने में सहज महसूस करते हैं?",
+      "text_en": "Are you comfortable making decisions independently?",
+      "reverse": false
+    },
+    {
+      "id": 18,
+      "code": "D1",
+      "text_hi": "क्या किसी project में आप जिम्मेदारी लेकर उसे आगे बढ़ाने की पहल करते हैं?",
+      "text_en": "Do you take responsibility and initiative to move a project forward?",
+      "reverse": false
+    },
+
+    {
+      "id": 19,
+      "code": "E12",
+      "text_hi": "क्या आप किसी विषय का उत्तर मिलने के बाद भी यह जानना चाहते हैं कि उसके पीछे 'क्यों' और 'कैसे' है?",
+      "text_en": "Even after finding an answer, do you want to know why and how it works?",
+      "reverse": false
+    },
+    {
+      "id": 20,
+      "code": "23BR",
+      "text_hi": "क्या आप किसी काम को अधिक efficient बनाने के लिए उसकी प्रक्रिया का विश्लेषण करते हैं?",
+      "text_en": "Do you analyze a process to find ways to make it more efficient?",
+      "reverse": false
+    },
+    {
+      "id": 21,
+      "code": "021",
+      "text_hi": "क्या आप किसी कठिन विचार को सरल भाषा में दूसरे व्यक्ति को समझाने में आनंद महसूस करते हैं?",
+      "text_en": "Do you enjoy explaining a difficult idea to someone in simple language?",
+      "reverse": false
+    }
+  ]
+}
