@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import Dict
 
@@ -7,39 +7,61 @@ from scoring.scoring_engine import generate_talent_profile
 
 app = FastAPI(
     title="AI Talent Mapper API",
-    description="AI-powered natural talent and intelligence mapping system",
-    version="0.1.0"
+    description=(
+        "Talent and behavioral pattern assessment API "
+        "for Vidhishastra Foundation"
+    ),
+    version="0.2.0"
 )
 
 
 class AssessmentRequest(BaseModel):
-    answers: Dict[str, str]
+    answers: Dict[str, int]
 
 
 @app.get("/")
 def home():
     return {
         "project": "AI Talent Mapper",
+        "organization": "Vidhishastra Foundation",
         "status": "running",
-        "message": "Find Right Talent. For Right Role. For Right Impact."
+        "version": "0.2.0",
+        "message": (
+            "Find Right Talent. "
+            "For Right Role. "
+            "For Right Impact."
+        )
     }
 
 
 @app.get("/health")
 def health_check():
     return {
-        "status": "healthy"
+        "status": "healthy",
+        "service": "AI Talent Mapper API"
     }
 
 
 @app.post("/assess")
 def assess_candidate(request: AssessmentRequest):
+    try:
+        profile = generate_talent_profile(
+            request.answers
+        )
 
-    profile = generate_talent_profile(
-        request.answers
-    )
+        return {
+            "success": True,
+            "result": profile
+        }
 
-    return {
-        "success": True,
-        "result": profile
-    }
+    except ValueError as error:
+        raise HTTPException(
+            status_code=400,
+            detail=str(error)
+        )
+
+    except Exception:
+        raise HTTPException(
+            status_code=500,
+            detail="Unable to process assessment."
+        )
