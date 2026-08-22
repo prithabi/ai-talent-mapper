@@ -7,10 +7,7 @@ from scoring.role_compatibility import calculate_role_compatibility
 
 app = FastAPI(
     title="AI Talent Mapper API",
-    description=(
-        "Talent and behavioral pattern assessment API "
-        "for Vidhishastra Foundation"
-    )
+    description="Talent and behavioral pattern assessment API for Vidhishastra Foundation",
     version="0.2.0"
 )
 
