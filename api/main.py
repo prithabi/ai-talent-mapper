@@ -41,15 +41,17 @@ def health_check():
 
 @app.post("/assess")
 def assess_candidate(request: AssessmentRequest):
-    try:
+   try:
         profile = generate_talent_profile(
             request.answers
         )
-role_compatibility = calculate_role_compatibility(
-    profile["score_percentages"]
-)        
 
-profile["role_compatibility"] = role_compatibility
+        role_compatibility = calculate_role_compatibility(
+            profile["score_percentages"]
+        )
+
+        profile["role_compatibility"] = role_compatibility
+
         return {
             "success": True,
             "result": profile
