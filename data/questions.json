@@ -21,7 +21,7 @@
     }
   },
   "codes": {
-    "E12": {
+    "EI2": {
       "name_hi": "खोजकर्ता बुद्धिमत्ता",
       "name_en": "Explorer Intelligence",
       "description_hi": "नई चीजों को खोजने, प्रयोग करने और स्वयं सीखने की प्रवृत्ति।",
@@ -91,21 +91,21 @@
   "questions": [
     {
       "id": 1,
-      "code": "E12",
+      "code": "EI2",
       "text_hi": "जब आपको कोई नई समस्या मिलती है, तो क्या आप स्वयं उसका कारण खोजने की कोशिश करते हैं?",
       "text_en": "When you face a new problem, do you try to discover the cause yourself?",
       "reverse": false
     },
     {
       "id": 2,
-      "code": "E12",
+      "code": "EI2",
       "text_hi": "क्या आपको नई चीजों के बारे में प्रयोग करके सीखना पसंद है?",
       "text_en": "Do you enjoy learning new things through experimentation?",
       "reverse": false
     },
     {
       "id": 3,
-      "code": "E12",
+      "code": "EI2",
       "text_hi": "क्या किसी विषय में आपकी जिज्ञासा आपको स्वयं research करने के लिए प्रेरित करती है?",
       "text_en": "Does curiosity about a subject motivate you to research it on your own?",
       "reverse": false
@@ -223,7 +223,7 @@
 
     {
       "id": 19,
-      "code": "E12",
+      "code": "EI2",
       "text_hi": "क्या आप किसी विषय का उत्तर मिलने के बाद भी यह जानना चाहते हैं कि उसके पीछे 'क्यों' और 'कैसे' है?",
       "text_en": "Even after finding an answer, do you want to know why and how it works?",
       "reverse": false
