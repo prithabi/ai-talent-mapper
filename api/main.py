@@ -3,14 +3,14 @@ from pydantic import BaseModel
 from typing import Dict
 
 from scoring.scoring_engine import generate_talent_profile
-
+from scoring.role_compatibility import calculate_role_compatibility
 
 app = FastAPI(
     title="AI Talent Mapper API",
     description=(
         "Talent and behavioral pattern assessment API "
         "for Vidhishastra Foundation"
-    ),
+    )
     version="0.2.0"
 )
 
@@ -48,7 +48,11 @@ def assess_candidate(request: AssessmentRequest):
         profile = generate_talent_profile(
             request.answers
         )
+role_compatibility = calculate_role_compatibility(
+    profile["score_percentages"]
+)        
 
+profile["role_compatibility"] = role_compatibility
         return {
             "success": True,
             "result": profile
