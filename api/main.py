@@ -71,7 +71,7 @@ def assess_candidate(request: AssessmentRequest):
         )
 
   @app.post("/team-synergy")
-def team_synergy(request: TeamSynergyRequest):
+  def team_synergy(request: TeamSynergyRequest):
     try:
         result = calculate_team_synergy(
             request.code_a,
