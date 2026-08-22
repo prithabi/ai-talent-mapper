@@ -70,14 +70,7 @@ def assess_candidate(request: AssessmentRequest):
             detail=str(error)
         )
 
-    
-  except Exception:
-        raise HTTPException(
-            status_code=500,
-            detail="Unable to process assessment."
-        )
-
-@app.post("/team-synergy")
+  @app.post("/team-synergy")
 def team_synergy(request: TeamSynergyRequest):
     try:
         result = calculate_team_synergy(
@@ -95,3 +88,10 @@ def team_synergy(request: TeamSynergyRequest):
             status_code=400,
             detail=str(error)
         )
+
+    except Exception:
+        raise HTTPException(
+            status_code=500,
+            detail="Unable to calculate team synergy."
+        )  
+  
