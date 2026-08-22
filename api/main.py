@@ -69,9 +69,8 @@ def assess_candidate(request: AssessmentRequest):
             status_code=400,
             detail=str(error)
         )
-
-  @app.post("/team-synergy")
-  def team_synergy(request: TeamSynergyRequest):
+@app.post("/team-synergy")
+def team_synergy(request: TeamSynergyRequest):
     try:
         result = calculate_team_synergy(
             request.code_a,
@@ -93,5 +92,5 @@ def assess_candidate(request: AssessmentRequest):
         raise HTTPException(
             status_code=500,
             detail="Unable to calculate team synergy."
-        )  
+        )
   
