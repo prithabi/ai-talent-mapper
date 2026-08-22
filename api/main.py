@@ -4,7 +4,7 @@ from typing import Dict
 
 from scoring.scoring_engine import generate_talent_profile
 from scoring.role_compatibility import calculate_role_compatibility
-
+from scoring.team_synergy import calculate_team_synergy
 app = FastAPI(
     title="AI Talent Mapper API",
     description="Talent and behavioral pattern assessment API for Vidhishastra Foundation",
@@ -14,6 +14,13 @@ app = FastAPI(
 
 class AssessmentRequest(BaseModel):
     answers: Dict[str, int]
+
+
+class TeamSynergyRequest(BaseModel):
+    code_a: str
+    code_b: str
+
+
 
 
 @app.get("/")
@@ -63,8 +70,28 @@ def assess_candidate(request: AssessmentRequest):
             detail=str(error)
         )
 
-    except Exception:
+    
+  except Exception:
         raise HTTPException(
             status_code=500,
             detail="Unable to process assessment."
+        )
+
+@app.post("/team-synergy")
+def team_synergy(request: TeamSynergyRequest):
+    try:
+        result = calculate_team_synergy(
+            request.code_a,
+            request.code_b
+        )
+
+        return {
+            "success": True,
+            "result": result
+        }
+
+    except ValueError as error:
+        raise HTTPException(
+            status_code=400,
+            detail=str(error)
         )
