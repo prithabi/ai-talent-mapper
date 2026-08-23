@@ -26,7 +26,7 @@ AI Talent Mapper follows a structured assessment and intelligence-mapping proces
 
 The current prototype includes six Intelligence Codes:
 
-- E12 — Explorer / Discovery Intelligence
+- EI2 — Explorer / Discovery Intelligence
 - 9HY — Agile / Kinetic Intelligence
 - 80L — Visual-Spatial Intelligence
 - 021 — Social-Linguistic Intelligence
