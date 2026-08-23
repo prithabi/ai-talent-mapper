@@ -7,7 +7,7 @@ Vidhishastra Foundation
 
 TALENT_CODES = {
 
-    "E12": {
+    "EI2": {
         "name": "Explorer Intelligence",
         "hindi_name": "खोजकर्ता बुद्धिमत्ता",
         "description": "Natural curiosity, independent learning, experimentation and discovery.",
