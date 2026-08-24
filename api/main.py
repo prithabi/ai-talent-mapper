@@ -1,7 +1,8 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import Dict
-
+from fastapi.responses import StreamingResponse
+from reporting.pdf_report import generate_candidate_report
 from scoring.scoring_engine import generate_talent_profile
 from scoring.role_compatibility import calculate_role_compatibility
 from scoring.team_synergy import calculate_team_synergy
@@ -19,7 +20,8 @@ class AssessmentRequest(BaseModel):
 class TeamSynergyRequest(BaseModel):
     code_a: str
     code_b: str
-
+class CandidateReportRequest(BaseModel):
+    result: Dict
 
 
 
@@ -93,4 +95,17 @@ def team_synergy(request: TeamSynergyRequest):
             status_code=500,
             detail="Unable to calculate team synergy."
         )
-  
+  @app.post("/candidate-report")
+def create_candidate_report(request: CandidateReportRequest):
+    pdf_buffer = generate_candidate_report(request.result)
+
+    return StreamingResponse(
+        pdf_buffer,
+        media_type="application/pdf",
+        headers={
+            "Content-Disposition": (
+                "attachment; "
+                "filename=ai_talent_mapper_candidate_report.pdf"
+            )
+        },
+    )
