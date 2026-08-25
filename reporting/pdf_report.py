@@ -70,7 +70,7 @@ def generate_candidate_report(result):
 
     role_compatibility = result.get("role_compatibility") or {}
     role_scores = role_compatibility.get("role_scores") or {}
-        secondary_text = (
+    secondary_text = (
         ", ".join(secondary_codes)
         if secondary_codes
         else "Not available"
