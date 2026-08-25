@@ -1,7 +1,16 @@
 from io import BytesIO
+
+from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
-from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib.enums import TA_CENTER
+from reportlab.platypus import (
+    SimpleDocTemplate,
+    Paragraph,
+    Spacer,
+    Table,
+    TableStyle,
+)
 
 
 def generate_candidate_report(result):
@@ -14,10 +23,29 @@ def generate_candidate_report(result):
     )
 
     styles = getSampleStyleSheet()
-    story = []
+    story = []   
+    brand_title = ParagraphStyle(
+        "BrandTitle",
+        parent=styles["Title"],
+        fontSize=22,
+        leading=27,
+        textColor=colors.HexColor("#173B57"),
+        alignment=TA_CENTER,
+        spaceAfter=8,
+    )
+
+    section_title = ParagraphStyle(
+        "SectionTitle",
+        parent=styles["Heading2"],
+        fontSize=13,
+        leading=17,
+        textColor=colors.HexColor("#147D64"),
+        spaceBefore=14,
+        spaceAfter=7,
+    )
 
     story.append(
-        Paragraph("AI Talent Mapper", styles["Title"])
+        Paragraph("AI Talent Mapper", brand_title)
     )
 
     story.append(
@@ -31,26 +59,105 @@ def generate_candidate_report(result):
 
     primary_code = result.get("primary_code") or "Not Available"
     primary_score = result.get("primary_score_percentage", 0)
+    candidate_name = result.get("candidate_name") or "Sample Candidate"
+    secondary_codes = result.get("secondary_codes") or []
 
+    primary_profile = result.get("primary_profile") or {}
+    profile_name = primary_profile.get("name") or "Talent Profile"
+    description = primary_profile.get("description") or "Not available"
+    strengths = primary_profile.get("strengths") or []
+    career_paths = primary_profile.get("career_paths") or []
+
+    role_compatibility = result.get("role_compatibility") or {}
+    role_scores = role_compatibility.get("role_scores") or {}
+        secondary_text = (
+        ", ".join(secondary_codes)
+        if secondary_codes
+        else "Not available"
+    )
+
+    summary_data = [
+        ["Candidate", candidate_name],
+        ["Primary Talent Code", primary_code],
+        ["Primary Score", f"{primary_score}%"],
+        ["Secondary Codes", secondary_text],
+    ]
+
+    summary_table = Table(summary_data, colWidths=[150, 300])
+    summary_table.setStyle(
+        TableStyle(
+            [
+                ("BACKGROUND", (0, 0), (0, -1), colors.HexColor("#E8F3F0")),
+                ("TEXTCOLOR", (0, 0), (0, -1), colors.HexColor("#173B57")),
+                ("FONTNAME", (0, 0), (0, -1), "Helvetica-Bold"),
+                ("GRID", (0, 0), (-1, -1), 0.5, colors.HexColor("#B8C8C3")),
+                ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                ("PADDING", (0, 0), (-1, -1), 7),
+            ]
+        )
+    )
+    story.append(summary_table)
+
+    story.append(Spacer(1, 15))
+    story.append(Paragraph("Talent Profile", section_title))
     story.append(
         Paragraph(
-            f"<b>Primary Talent Code:</b> {primary_code}",
-            styles["BodyText"]
+            f"<b>{profile_name}</b><br/>{description}",
+            styles["BodyText"],
         )
     )
 
+    story.append(Paragraph("Key Strengths", section_title))
+    strengths_text = (
+        ", ".join(str(item) for item in strengths)
+        if strengths
+        else "Not available"
+    )
+    story.append(Paragraph(strengths_text, styles["BodyText"]))
+
+    story.append(Paragraph("Suggested Career Paths", section_title))
+    career_text = (
+        ", ".join(str(item) for item in career_paths)
+        if career_paths
+        else "Not available"
+    )
+    story.append(Paragraph(career_text, styles["BodyText"]))
+
+    story.append(Paragraph("Role Compatibility Index", section_title))
+    if role_scores:
+        rci_data = [["Role", "Compatibility Score"]]
+        for role, score in role_scores.items():
+            rci_data.append([str(role), f"{score}%"])
+
+        rci_table = Table(rci_data, colWidths=[280, 170])
+        rci_table.setStyle(
+            TableStyle(
+                [
+                    ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#173B57")),
+                    ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+                    ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
+                    ("GRID", (0, 0), (-1, -1), 0.5, colors.HexColor("#B8C8C3")),
+                    ("PADDING", (0, 0), (-1, -1), 7),
+                ]
+            )
+        )
+        story.append(rci_table)
+    else:
+        story.append(Paragraph("Not available", styles["BodyText"]))
+
+    story.append(Paragraph("Important Note", section_title))
     story.append(
         Paragraph(
-            f"<b>Primary Score:</b> {primary_score}%",
-            styles["BodyText"]
+            "This report is a talent and behavioral pattern assessment prototype. "
+            "It is not a clinical or psychological diagnosis.",
+            styles["BodyText"],
         )
     )
 
     story.append(Spacer(1, 15))
-
     story.append(
         Paragraph(
-            "Generated by AI Talent Mapper — Vidhishastra Foundation",
+            "Generated by AI Talent Mapper - Vidhishastra Foundation",
             styles["BodyText"]
         )
     )
