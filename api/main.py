@@ -1,3 +1,4 @@
+import json
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import Dict
@@ -46,7 +47,21 @@ def demo_page():
         "demo/index.html",
         media_type="text/html",
     )
+@app.get("/questions", include_in_schema=False)
+def get_questions():
+    with open("data/questions.json", encoding="utf-8") as file:
+        assessment_data = json.load(file)
 
+    public_questions = [
+        {
+            "id": question["id"],
+            "text_hi": question["text_hi"],
+            "text_en": question["text_en"],
+        }
+        for question in assessment_data["questions"]
+    ]
+
+    return {"questions": public_questions}
 @app.get("/health")
 def health_check():
     return {
