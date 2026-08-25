@@ -95,8 +95,9 @@ def team_synergy(request: TeamSynergyRequest):
             status_code=500,
             detail="Unable to calculate team synergy."
         )
-  @app.post("/candidate-report")
-def create_candidate_report(request: CandidateReportRequest):
+    @app.post("/candidate-report")
+    def create_candidate_report(request
+    CandidateReportRequest):
     pdf_buffer = generate_candidate_report(request.result)
 
     return StreamingResponse(
