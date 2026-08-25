@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AI Talent Mapper</title>
+
+  <style>
+    :root {
+      --navy: #173b57;
+      --green: #147d64;
+      --light: #eef7f4;
+      --line: #d8e4e0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: #1f2937;
+      background: #f4f7f8;
+    }
+
+    header {
+      padding: 30px 18px;
+      color: white;
+      text-align: center;
+      background: linear-gradient(135deg, var(--navy), var(--green));
+    }
+
+    header h1 {
+      margin: 0 0 8px;
+    }
+
+    header p {
+      margin: 0;
+      opacity: 0.92;
+    }
+
+    main {
+      width: min(760px, 94%);
+      margin: 22px auto;
+    }
+
+    .card {
+      padding: 20px;
+      margin-bottom: 16px;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: 0 5px 18px rgba(23, 59, 87, 0.07);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #aebfba;
+      border-radius: 9px;
+      font-size: 16px;
+    }
+
+    .question {
+      padding: 15px;
+      margin: 12px 0;
+      background: var(--light);
+      border-left: 4px solid var(--green);
+      border-radius: 9px;
+    }
+
+    .question-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    input[type="range"] {
+      width: 100%;
+    }
+
+    .score {
+      min-width: 34px;
+      padding: 6px;
+      color: white;
+      text-align: center;
+      font-weight: 700;
+      background: var(--navy);
+      border-radius: 7px;
+    }
+
+    .scale {
+      display: flex;
+      justify-content: space-between;
+      color: #60706b;
+      font-size: 12px;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      border: 0;
+      border-radius: 10px;
+      color: white;
+      background: var(--green);
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+    }
+
+    #status {
+      margin-top: 14px;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    footer {
+      padding: 22px;
+      color: #60706b;
+      text-align: center;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>AI Talent Mapper</h1>
+    <p>Find Right Talent. For Right Role. For Right Impact.</p>
+  </header>
+
+  <main>
+    <form id="assessmentForm">
+      <section class="card">
+        <label for="candidateName">Candidate Name</label>
+
+        <input
+          id="candidateName"
+          type="text"
+          placeholder="Enter candidate name"
+          required
+        >
+      </section>
+
+      <section class="card">
+        <h2>21-Item Talent Assessment</h2>
+        <p>Rate every item from 1 (Low) to 5 (High).</p>
+
+        <div id="questions"></div>
+      </section>
+
+      <section class="card">
+        <button id="submitButton" type="submit">
+          Generate My Talent Report
+        </button>
+
+        <div id="status"></div>
+      </section>
+    </form>
+  </main>
+
+  <footer>
+    Vidhishastra Foundation - Prototype assessment, not a clinical diagnosis.
+  </footer>
+
+  <script>
+    const questions = document.getElementById("questions");
+
+    for (let number = 1; number <= 21; number += 1) {
+      questions.insertAdjacentHTML(
+        "beforeend",
+        `
+          <div class="question">
+            <label for="q${number}">
+              Assessment Item ${number}
+            </label>
+
+            <div class="question-row">
+              <input
+                id="q${number}"
+                type="range"
+                min="1"
+                max="5"
+                value="3"
+                oninput="this.nextElementSibling.textContent=this.value"
+              >
+
+              <span class="score">3</span>
+            </div>
+
+            <div class="scale">
+              <span>Low</span>
+              <span>High</span>
+            </div>
+          </div>
+        `
+      );
+    }
+
+    document
+      .getElementById("assessmentForm")
+      .addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const button = document.getElementById("submitButton");
+        const status = document.getElementById("status");
+        const answers = {};
+
+        for (let number = 1; number <= 21; number += 1) {
+          answers[`q${number}`] =
+            Number(document.getElementById(`q${number}`).value);
+        }
+
+        button.disabled = true;
+        status.textContent =
+          "Generating your professional report...";
+
+        try {
+          const response = await fetch("/assess-and-report", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              candidate_name:
+                document
+                  .getElementById("candidateName")
+                  .value
+                  .trim(),
+              answers: answers
+            })
+          });
+
+          if (!response.ok) {
+            throw new Error("Report generation failed");
+          }
+
+          const pdf = await response.blob();
+          const link = document.createElement("a");
+
+          link.href = URL.createObjectURL(pdf);
+          link.download = "ai_talent_mapper_complete_report.pdf";
+
+          link.click();
+          URL.revokeObjectURL(link.href);
+
+          status.textContent =
+            "Report generated successfully.";
+        } catch (error) {
+          status.textContent =
+            "Unable to generate report. Please try again.";
+        } finally {
+          button.disabled = false;
+        }
+      });
+  </script>
+</body>
+</html>
