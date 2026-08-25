@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import Dict
-from fastapi.responses import StreamingResponse
+from fastapi.responses import StreamingResponse, FileResponse
 from reporting.pdf_report import generate_candidate_report
 from scoring.scoring_engine import generate_talent_profile
 from scoring.role_compatibility import calculate_role_compatibility
@@ -40,7 +40,12 @@ def home():
             "For Right Impact."
         )
     }
-
+@app.get("/demo", include_in_schema=False)
+def demo_page():
+    return FileResponse(
+        "demo/index.html",
+        media_type="text/html",
+    )
 
 @app.get("/health")
 def health_check():
