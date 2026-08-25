@@ -15,7 +15,9 @@ app = FastAPI(
 
 class AssessmentRequest(BaseModel):
     answers: Dict[str, int]
-
+class AssessAndReportRequest(BaseModel):
+    candidate_name: str
+    answers: Dict[str, int]
 
 class TeamSynergyRequest(BaseModel):
     code_a: str
@@ -109,3 +111,39 @@ def create_candidate_report(request: CandidateReportRequest):
             )
         },
 )
+@app.post("/assess-and-report")
+def assess_and_create_report(request: AssessAndReportRequest):
+    try:
+        profile = generate_talent_profile(request.answers)
+
+        role_compatibility = calculate_role_compatibility(
+            profile["score_percentages"]
+        )
+
+        profile["role_compatibility"] = role_compatibility
+        profile["candidate_name"] = request.candidate_name
+
+        pdf_buffer = generate_candidate_report(profile)
+
+        return StreamingResponse(
+            pdf_buffer,
+            media_type="application/pdf",
+            headers={
+                "Content-Disposition": (
+                    "attachment; "
+                    "filename=ai_talent_mapper_complete_report.pdf"
+                )
+            },
+        )
+
+    except ValueError as error:
+        raise HTTPException(
+            status_code=400,
+            detail=str(error),
+        )
+
+    except Exception:
+        raise HTTPException(
+            status_code=500,
+            detail="Unable to assess candidate and generate report",
+        )
