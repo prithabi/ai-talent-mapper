@@ -175,39 +175,64 @@
   </footer>
 
   <script>
-    const questions = document.getElementById("questions");
+        const questions = document.getElementById("questions");
 
-    for (let number = 1; number <= 21; number += 1) {
-      questions.insertAdjacentHTML(
-        "beforeend",
-        `
-          <div class="question">
-            <label for="q${number}">
-              Assessment Item ${number}
-            </label>
+    async function loadQuestions() {
+      questions.innerHTML =
+        "<p>Loading assessment questions...</p>";
 
-            <div class="question-row">
-              <input
-                id="q${number}"
-                type="range"
-                min="1"
-                max="5"
-                value="3"
-                oninput="this.nextElementSibling.textContent=this.value"
-              >
+      try {
+        const response = await fetch("/questions");
 
-              <span class="score">3</span>
-            </div>
+        if (!response.ok) {
+          throw new Error("Unable to load questions");
+        }
 
-            <div class="scale">
-              <span>Low</span>
-              <span>High</span>
-            </div>
-          </div>
-        `
-      );
+        const data = await response.json();
+        questions.innerHTML = "";
+
+        data.questions.forEach((question) => {
+          questions.insertAdjacentHTML(
+            "beforeend",
+            `
+              <div class="question">
+                <label for="q${question.id}">
+                  ${question.id}. ${question.text_en}
+                </label>
+
+                <p style="margin:6px 0 12px;color:#52635e">
+                  ${question.text_hi}
+                </p>
+
+                <div class="question-row">
+                  <input
+                    id="q${question.id}"
+                    type="range"
+                    min="1"
+                    max="5"
+                    value="3"
+                    oninput="this.nextElementSibling.textContent=this.value"
+                  >
+
+                  <span class="score">3</span>
+                </div>
+
+                <div class="scale">
+                  <span>Not at all / बिल्कुल नहीं</span>
+                  <span>Very High / बहुत अधिक</span>
+                </div>
+              </div>
+            `
+          );
+        });
+      } catch (error) {
+        questions.innerHTML =
+          "<p>Unable to load questions. Please refresh the page.</p>";
+      }
     }
 
+    loadQuestions();
+  
     document
       .getElementById("assessmentForm")
       .addEventListener("submit", async (event) => {
